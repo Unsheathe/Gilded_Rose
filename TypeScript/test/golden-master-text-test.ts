@@ -29,4 +29,5 @@ for (let i = 0; i < days; i++) {
   });
   console.log();
   gildedRose.updateQuality();
+  //gildedRose.filterCases()
 }
