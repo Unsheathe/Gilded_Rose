@@ -17,9 +17,9 @@ export class GildedRose {
     this.items = items;
   }
 
-  //filterCases(){
+
   updateQuality(){
-    const specialCases = ['Aged Brie', "Sulfuras, Hand of Ragnaros", 'Backstage passes to a TAFKAL80ETC concert', 'Conjured Mana Cake']//
+    const specialCases = ['Aged Brie', "Sulfuras, Hand of Ragnaros", 'Backstage passes to a TAFKAL80ETC concert', 'Conjured Mana Cake']
     for (let i = 0; i < this.items.length; i++) {
       if (!specialCases.includes(this.items[i].name)){
         this.updateData(i)
@@ -30,20 +30,32 @@ export class GildedRose {
   updateData(i){
     this.items[i].sellIn >= 0 ? this.items[i].sellIn -= 1 : null
     this.items[i].sellIn >= 0 ? this.items[i].quality -= 1 : this.items[i].quality -= 2 //quality decreases faster if sellby passes
-    this.items[i].quality <0 ? this.items[i].quality = 0 : null //quality should not be below 0
+    this.items[i].quality < 0 ? this.items[i].quality = 0 : null //quality should not be below 0
   }
   edgeCases(i){
     if (this.items[i].name == 'Aged Brie'){
-      this.items[i].quality < 50 ? this.items[i].quality++ : null
+      this.agedBrie(i)
     }
-    if (this.items[i].name == 'Backstage passes to a TAFKAL80ETC concert'){//
-      this.items[i].sellIn < 0 ? this.items[i].quality=0 : this.items[i].sellIn <5 ? this.items[i].quality += 3 : this.items[i].sellIn <10 ? this.items[i].quality +=2 : this.items[i].quality++
-      this.items[i].sellIn--
+    else if (this.items[i].name == 'Backstage passes to a TAFKAL80ETC concert'){
+      this.tickets(i)
     }
-    if (this.items[i].name == 'Conjured Mana Cake'){//
+    else if (this.items[i].name == 'Conjured Mana Cake'){//
       this.items[i].quality -=2
       this.items[i].sellIn --
     }
   }
+  agedBrie(i){
+    if(this.items[i].quality < 50){
+      this.items[i].quality++ 
+    }
+  }
+  tickets(i){
+    if(this.items[i].sellIn < 0){this.items[i].quality = 0}
+    else if(this.items[i].sellIn < 5){this.items[i].quality += 3}
+    else if(this.items[i].sellIn < 10){this.items[i].quality += 2} 
+    else{this.items[i].quality++}
+    this.items[i].sellIn--
+  }
 }
+
 
